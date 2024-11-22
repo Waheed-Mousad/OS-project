@@ -32,7 +32,7 @@ def N_network(X_train, X_test, y_train, y_test):
          Dense(num_features*2, ),  # Third Hidden layer, I choose half the previous layer size for this one
          Dense(num_features, ),  # fpurth layer, also half the previous
          Dense(1)])  # Output Layer, no activation for regression
-    # Linear activation on the hidden layer were tested and the results were the best (for that specific use case)
+    # Linear activation on the hidden layer were tested and the results were the best (for this specific use case)
     # Compile the model
     NN.compile(optimizer='adam', loss='mae', metrics=['mae'])
     # Early stopping
