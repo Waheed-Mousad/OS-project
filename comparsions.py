@@ -18,6 +18,7 @@ if __name__ == '__main__':
     'SubmitTime', 'WaitTime', 'AverageCPUTimeUsed', 'Used Memory',
     'ReqTime: ', 'ReqMemory', 'Status', 'UserID', 'RunTime '
     ], samples=100)
+    #data_visualization(df, "RunTime ")
     X = df.drop('RunTime ', axis=1)
     y = df['RunTime ']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
