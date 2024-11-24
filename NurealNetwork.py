@@ -5,7 +5,7 @@ import os
 import numpy as np
 import random
 import warnings
-
+import time
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Disable oneDNN optimizations
 # Suppress TensorFlow logs
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress INFO and WARNING logs
@@ -41,7 +41,10 @@ def N_network(X_train, X_test, y_train, y_test):
     # Fit the model
     NN.fit(X_train, y_train, epochs=1000, batch_size=8, validation_data=(X_test, y_test), callbacks=[early_stopping],
            shuffle=False, verbose=False)
+    # Predict the data
+    start = time.time()
     loss, mae_test = NN.evaluate(X_test, y_test, verbose=False)
+    end = time.time()
     loss, mae_train = NN.evaluate(X_train, y_train, verbose=False)
     YELLOW = "\033[33m"  # Yellow color
     RED = "\033[31m"  # Red color
@@ -50,6 +53,7 @@ def N_network(X_train, X_test, y_train, y_test):
         f"{YELLOW}(Neural Network from Tensorflow){RESET} {RED}MAE{RESET} for training data: {RED}{mae_train}{RESET}")
     print(
         f"{YELLOW}(Neural Network from Tensorflow){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
+    print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
     return
 
 
