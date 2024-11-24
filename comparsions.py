@@ -61,31 +61,31 @@ if __name__ == '__main__':
     GREEN = '\033[32m'
     RESET = '\033[0m'
 
-    print("############### Normal Line from scratch ################")
+    print(f"{GREEN}############### Normal Line from scratch ################{RESET}")
     train_mae, test_mae =NormalLine(X_train, y_train, X_test, y_test)
     save_mae_results("NormalLine (Scratch)", train_mae, test_mae)
 
-    print("############### Normal Line from library ################")
+    print(f"{GREEN}############### Normal Line from library ################{RESET}")
     train_mae, test_mae = NormalLine_lib(X_train, y_train, X_test, y_test)
     save_mae_results("NormalLine (Library)", train_mae, test_mae)
 
-    print("############### KNN from library ########################")
+    print(f"{GREEN}############### KNN from library ########################{RESET}")
     train_mae, test_mae = KNN_lib(X_train, y_train, X_test, y_test)
     save_mae_results("KNN (Library)", train_mae, test_mae)
 
-    print("############### SVR from library ########################")
+    print(f"{GREEN}############### SVR from library ########################{RESET}")
     train_mae, test_mae = SVR_lib(X_train, y_train, X_test, y_test)
     save_mae_results("SVR (Library)", train_mae, test_mae)
 
-    print("############### Decision Tree from library ##############")
+    print(f"{GREEN}############### Decision Tree from library ##############{RESET}")
     train_mae, test_mae = DecisionTree_lib(X_train, y_train, X_test, y_test)
     save_mae_results("DecisionTree (Library)", train_mae, test_mae)
 
-    print("############### Random Forest from library ##############")
+    print(f"{GREEN}############### Random Forest from library ##############{RESET}")
     train_mae, test_mae = RandomForest_lib(X_train, y_train, X_test, y_test)
     save_mae_results("RandomForest (Library)", train_mae, test_mae)
 
-    print("############### Neural Network from library #############")
+    print(f"{GREEN}############### Neural Network from library #############{RESET}")
     train_mae, test_mae = N_network(X_train, X_test, y_train, y_test)
     save_mae_results("NeuralNetwork (Library)", train_mae, test_mae)
 
