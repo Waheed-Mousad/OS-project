@@ -7,7 +7,7 @@ from linearRegressionlib import NormalLine_lib
 from NurealNetwork import N_network
 from KNN import KNN_lib
 from SVR import SVR_lib
-from DecisionTree import DecisionTree_lib
+from DecisionTree import DecisionTree_lib, plot_feature_importances
 from RandomForest import RandomForest_lib
 
 # Dictionary to store MAE results
@@ -77,6 +77,10 @@ if __name__ == '__main__':
     train_mae, test_mae = SVR_lib(X_train, y_train, X_test, y_test)
     save_mae_results("SVR (Library)", train_mae, test_mae)
 
+    print(f"{GREEN}############### Decision Tree from library ##############{RESET}")
+    mae_train, mae_test, feature_importances, feature_names = DecisionTree_lib(X_train, y_train, X_test, y_test)
+    save_mae_results("DecisionTree (Library)", train_mae, test_mae)
+
     print(f"{GREEN}############### Random Forest from library ##############{RESET}")
     train_mae, test_mae = RandomForest_lib(X_train, y_train, X_test, y_test)
     save_mae_results("RandomForest (Library)", train_mae, test_mae)
@@ -85,8 +89,9 @@ if __name__ == '__main__':
     train_mae, test_mae = N_network(X_train, X_test, y_train, y_test)
     save_mae_results("NeuralNetwork (Library)", train_mae, test_mae)
 
-    print(f"{GREEN}############### Decision Tree from library ##############{RESET}")
-    train_mae, test_mae = DecisionTree_lib(X_train, y_train, X_test, y_test)
-    save_mae_results("DecisionTree (Library)", train_mae, test_mae)
+    # plot important features
+    plot_feature_importances(feature_importances, feature_names)
+    # plot number of instances and features against the target
+    data_visualization(df, "RunTime ")
     # Plot MAE comparison
     plot_comparison(mae_results)
