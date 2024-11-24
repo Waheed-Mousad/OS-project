@@ -54,7 +54,7 @@ def N_network(X_train, X_test, y_train, y_test):
     print(
         f"{YELLOW}(Neural Network from Tensorflow){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
     print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
-    return
+    return mae_train,mae_test
 
 
 

@@ -25,7 +25,7 @@ def NormalLine_lib(X_train, y_train, X_test, y_test):
     print(
         f"{YELLOW}(Linear regression using normal line from library){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
     print(f"{YELLOW}(Linear regression using normal line from library){RESET} {RED}Time{RESET} for testing data: {RED}{end-start}{RESET}")
-    return
+    return mae_train,mae_test
 
 if __name__ == '__main__':
     df = pd.read_csv('processes_datasets.csv')

@@ -33,7 +33,7 @@ def RandomForest_lib(X_train, y_train, X_test, y_test):
         f"{YELLOW}(Random Forest from library){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
     print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
 
-    return
+    return mae_train,mae_test
 
 
 if __name__ == '__main__':
