@@ -57,7 +57,7 @@ def N_network(X_train, X_test, y_train, y_test):
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('Modified_Process_dataset.csv')
+    df = pd.read_csv('Original_processes_datasets.csv')
     X = df.drop('RunTime ', axis=1)
     y = df['RunTime ']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
