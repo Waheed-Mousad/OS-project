@@ -26,10 +26,6 @@ def SVR_lib(X_train, y_train, X_test, y_test):
 
 if __name__ == '__main__':
     df = pd.read_csv('Original_processes_datasets.csv')
-    df, mapping = data_preprocess(df,target_col=[
-    'SubmitTime', 'WaitTime', 'AverageCPUTimeUsed', 'Used Memory',
-    'ReqTime: ', 'ReqMemory', 'Status', 'UserID', 'RunTime '
-    ], samples=100)
     X = df.drop('RunTime ', axis=1)
     y = df['RunTime ']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
