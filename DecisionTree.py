@@ -28,17 +28,22 @@ def DecisionTree_lib(X_train, y_train, X_test, y_test):
     sorted_features = feature_names[sorted_indices]       # Sorted feature names
     sorted_importances = feature_importances[sorted_indices]  # Sorted importances
 
+    # Create a DataFrame for table display
+    feature_table = pd.DataFrame({
+        'Feature': sorted_features,
+        'Importance': sorted_importances
+    })
+
+
+    # Print the table
+    print("\nFeature Importance Table:")
+    print(feature_table.to_string(index=False))  # Pretty print the table without an index
+
     YELLOW = "\033[33m"  # Yellow color
     RED = "\033[31m"  # Red color
     RESET = "\033[0m"  # Reset to default color
-    BLUE = "\033[34m"  # Blue color
-    GREEN = "\033[32m"  # Green color
-    # print most important features first
-    print(f"{RED}How important is each feature according to decision tree?{RESET}:")
-    for i in range(len(model.feature_importances_)):
-        print(f"{GREEN}{X_train.columns[i]}{RESET}: {BLUE}{model.feature_importances_[i]}{RESET}")
     print(
-        f"{YELLOW}(Decision Tree from library){RESET} {RED}MAE{RESET} for training data: {RED}{mae_train}{RESET}")
+        f"\n{YELLOW}(Decision Tree from library){RESET} {RED}MAE{RESET} for training data: {RED}{mae_train}{RESET}")
     print(
         f"{YELLOW}(Decision Tree from library){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
     print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
@@ -49,7 +54,7 @@ def DecisionTree_lib(X_train, y_train, X_test, y_test):
     plt.title('Feature Importances in Decision Tree')
     plt.xlabel('Features')
     plt.ylabel('Importance')
-    #plt.gca().invert_yaxis()  # Invert y-axis to have the most important at the top
+    plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
     plt.show()
 
