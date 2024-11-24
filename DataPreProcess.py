@@ -62,7 +62,7 @@ def denormlize_data(df, mapping):
 
 if __name__ == '__main__':
     # Load the data
-    df = pd.read_csv('Original_processes_datasets.csv')
+    df = pd.read_csv('processes_datasets.csv')
     # Preprocess the data
     df , mapping = data_preprocess(df, target_col=[
     'SubmitTime', 'WaitTime', 'AverageCPUTimeUsed', 'Used Memory',
