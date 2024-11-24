@@ -77,10 +77,6 @@ if __name__ == '__main__':
     train_mae, test_mae = SVR_lib(X_train, y_train, X_test, y_test)
     save_mae_results("SVR (Library)", train_mae, test_mae)
 
-    print(f"{GREEN}############### Decision Tree from library ##############{RESET}")
-    train_mae, test_mae = DecisionTree_lib(X_train, y_train, X_test, y_test)
-    save_mae_results("DecisionTree (Library)", train_mae, test_mae)
-
     print(f"{GREEN}############### Random Forest from library ##############{RESET}")
     train_mae, test_mae = RandomForest_lib(X_train, y_train, X_test, y_test)
     save_mae_results("RandomForest (Library)", train_mae, test_mae)
@@ -89,5 +85,8 @@ if __name__ == '__main__':
     train_mae, test_mae = N_network(X_train, X_test, y_train, y_test)
     save_mae_results("NeuralNetwork (Library)", train_mae, test_mae)
 
+    print(f"{GREEN}############### Decision Tree from library ##############{RESET}")
+    train_mae, test_mae = DecisionTree_lib(X_train, y_train, X_test, y_test)
+    save_mae_results("DecisionTree (Library)", train_mae, test_mae)
     # Plot MAE comparison
     plot_comparison(mae_results)
