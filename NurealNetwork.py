@@ -57,7 +57,7 @@ def N_network(X_train, X_test, y_train, y_test):
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('processes_datasets.csv')
+    df = pd.read_csv('Original_processes_datasets.csv')
     df, mapping = data_preprocess(df,target_col=[
     'SubmitTime', 'WaitTime', 'AverageCPUTimeUsed', 'Used Memory',
     'ReqTime: ', 'ReqMemory', 'Status', 'UserID', 'RunTime '
