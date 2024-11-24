@@ -23,10 +23,6 @@ def DecisionTree_lib(X_train, y_train, X_test, y_test):
     feature_importances = model.feature_importances_
     feature_names = X_train.columns
 
-    # Sort features by importance in descending order
-    sorted_indices = feature_importances.argsort()[::-1]  # Indices of sorted importances (descending)
-    sorted_features = feature_names[sorted_indices]       # Sorted feature names
-    sorted_importances = feature_importances[sorted_indices]  # Sorted importances
 
     YELLOW = "\033[33m"  # Yellow color
     RED = "\033[31m"  # Red color
@@ -43,19 +39,25 @@ def DecisionTree_lib(X_train, y_train, X_test, y_test):
         f"{YELLOW}(Decision Tree from library){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
     print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
 
+
+    return mae_train,mae_test, feature_importances, feature_names
+
+
+def plot_feature_importances(importances, feature_names):
+    # Sort features by importance in descending order
+    sorted_indices = importances.argsort()[::-1]
+    sorted_features = feature_names[sorted_indices]
+    sorted_importances = importances[sorted_indices]
+
     # Plot feature importances
     plt.figure(figsize=(10, 6))
     plt.bar(sorted_features, sorted_importances, color='skyblue')
     plt.title('Feature Importances in Decision Tree')
     plt.xlabel('Features')
     plt.ylabel('Importance')
-    #plt.gca().invert_yaxis()  # Invert y-axis to have the most important at the top
+    # plt.gca().invert_yaxis()  # Invert y-axis to have the most important at the top
     plt.tight_layout()
     plt.show()
-
-    return mae_train,mae_test
-
-
 
 if __name__ == '__main__':
     df = pd.read_csv('processes_datasets.csv')
@@ -66,4 +68,6 @@ if __name__ == '__main__':
     X = df.drop('RunTime ', axis=1)
     y = df['RunTime ']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    DecisionTree_lib(X_train, y_train, X_test, y_test)
+    mae_train, mae_test, feature_importances, feature_names = DecisionTree_lib(X_train, y_train, X_test, y_test)
+    plot_feature_importances(feature_importances, feature_names)
+
