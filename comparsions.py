@@ -10,7 +10,7 @@ from DecisionTree import DecisionTree_lib
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('Original_processes_datasets.csv')
+    df = pd.read_csv('Modified_Process_dataset.csv')
     #data_visualization(df, "RunTime ")
     X = df.drop('RunTime ', axis=1)
     y = df['RunTime ']
