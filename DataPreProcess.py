@@ -72,6 +72,7 @@ if __name__ == '__main__':
     data_visualization(df, 'RunTime ')
     print(df)
     print(mapping)
-    # Denormlize the data
+    df.to_csv('Modified_Process_dataset.csv', index=False)
+    # Denormalize the data
     df = denormlize_data(df, mapping)
     print(df)
