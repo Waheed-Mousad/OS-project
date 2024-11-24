@@ -4,6 +4,9 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import time
 def NormalLine(X_train, y_train, X_test, y_test):
+    # copy the dataframe to not effect the original dataframe
+    X_train = X_train.copy()
+    X_test = X_test.copy()
     # Add a column of ones to X_train and X_test
     X_train.insert(0, 'Ones', 1)
     X_test.insert(0, 'Ones', 1)
