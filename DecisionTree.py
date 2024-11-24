@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 from DataPreProcess import data_preprocess, data_visualization, denormlize_data
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
@@ -17,6 +18,16 @@ def DecisionTree_lib(X_train, y_train, X_test, y_test):
     start = time.time()
     mae_test = mean_absolute_error(y_test, y_test_pred)
     end = time.time()
+
+    # Get feature importances
+    feature_importances = model.feature_importances_
+    feature_names = X_train.columns
+
+    # Sort features by importance in descending order
+    sorted_indices = feature_importances.argsort()[::-1]  # Indices of sorted importances (descending)
+    sorted_features = feature_names[sorted_indices]       # Sorted feature names
+    sorted_importances = feature_importances[sorted_indices]  # Sorted importances
+
     YELLOW = "\033[33m"  # Yellow color
     RED = "\033[31m"  # Red color
     RESET = "\033[0m"  # Reset to default color
@@ -31,6 +42,17 @@ def DecisionTree_lib(X_train, y_train, X_test, y_test):
     print(
         f"{YELLOW}(Decision Tree from library){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
     print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
+
+    # Plot feature importances
+    plt.figure(figsize=(10, 6))
+    plt.bar(sorted_features, sorted_importances, color='skyblue')
+    plt.title('Feature Importances in Decision Tree')
+    plt.xlabel('Features')
+    plt.ylabel('Importance')
+    #plt.gca().invert_yaxis()  # Invert y-axis to have the most important at the top
+    plt.tight_layout()
+    plt.show()
+
     return mae_train,mae_test
 
 
