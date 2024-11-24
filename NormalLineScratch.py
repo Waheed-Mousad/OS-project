@@ -2,6 +2,7 @@ import pandas as pd
 from DataPreProcess import data_preprocess, data_visualization, denormlize_data
 from sklearn.model_selection import train_test_split
 import numpy as np
+import time
 def NormalLine(X_train, y_train, X_test, y_test):
     # Add a column of ones to X_train and X_test
     X_train.insert(0, 'Ones', 1)
@@ -23,7 +24,9 @@ def NormalLine(X_train, y_train, X_test, y_test):
 
     # calculate MAE for training data and testing data
     y_train_pred = np.dot(X_train, b)
+    start = time.time()
     y_test_pred = np.dot(X_test, b)
+    end = time.time()
     mae_train = np.mean(np.abs(y_train - y_train_pred))
     mae_test = np.mean(np.abs(y_test - y_test_pred))
     YELLOW = "\033[33m"  # Yellow color
@@ -33,6 +36,7 @@ def NormalLine(X_train, y_train, X_test, y_test):
         f"{YELLOW}(Linear regression using normal line from scratch){RESET} {RED}MAE{RESET} for training data: {RED}{mae_train}{RESET}")
     print(
         f"{YELLOW}(Linear regression using normal line from scratch){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
+    print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
     return
 
 if __name__ == '__main__':
