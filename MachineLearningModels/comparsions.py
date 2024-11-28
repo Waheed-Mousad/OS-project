@@ -19,7 +19,7 @@ def save_mae_results(model_name, train_mae, test_mae):
     """
     mae_results[model_name] = {"train": train_mae, "test": test_mae}
 
-def plot_comparison(mae_results):
+def plot_comparison(mae_results): #TODO find the problem with decision tree
     """
     Plot training and testing MAE for all models.
     """
