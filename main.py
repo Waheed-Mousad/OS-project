@@ -29,6 +29,7 @@ import time
 if __name__ == '__main__':
     data1_models = {}
     data2_models = {}
+    data_models = [data1_models, data2_models]
     predictions_data1 = {}
     predictions_data2 = {}
     GREEN = "\033[32m"  # Green color
@@ -39,9 +40,8 @@ if __name__ == '__main__':
     MAGENTA = "\033[35m"  # Magenta color
 
     # a function to train the model based on the user input based on the dataset the user choose
-    def train_model(dataset, model=0, datasetint=1):
+    def train_model(dataset, model=0, datasetint=0):
         """
-
         :param dataset: dataset dataframe to work on
         :param model: machine learning model including
         linear regression scratch = 1
@@ -54,144 +54,73 @@ if __name__ == '__main__':
         0 for all models
         :return:
         """
-        if datasetint == 1:
-            if model == 0:
-                print(f"{RED}all model training is not supported yet :){RESET}")
-            if model == 1:
-                print(f"{GREEN}######Training Linear Regression from scratch######{RESET}")
-                if 'Linear Regression from scratch' in data1_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data1_models['Linear Regression from scratch'].mae_test}{RESET}")
+        if model == 0:
+            print(f"{RED}all model training is not supported yet :){RESET}")
+        if model == 1:
+            print(f"{GREEN}######Training Linear Regression from scratch######{RESET}")
+            if 'Linear Regression from scratch' in data_models[datasetint]:
+                print(f"{RED}Model already trained{RESET}")
+                print(f"{GREEN}Model test MAE:{RED} {data_models[datasetint]['Linear Regression from scratch'].mae_test}{RESET}")
 
-                else:
-                    linearRegScratch = LineatRegressionScratch()
-                    linearRegScratch.train(*dataset)
-                    data1_models['Linear Regression from scratch'] = linearRegScratch
-                    X = linearRegScratch.predict(dataset[2])
-                    print(X)
-            if model == 2:
-                print(f"{GREEN}######Training Linear Regression from library######{RESET}")
-                if 'Linear Regression from library' in data1_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data1_models['Linear Regression from library'].mae_test}{RESET}")
-                else:
-                    linearRegLib = LinearRegression_lib()
-                    linearRegLib.train(*dataset)
-                    data1_models['Linear Regression from library'] = linearRegLib
-            if model == 3:
-                print(f"{GREEN}######Training Decision Tree######{RESET}")
-                if 'Decision Tree' in data1_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data1_models['Decision Tree'].mae_test}{RESET}")
-                else:
-                    decisionTree = DecisionTree_lib()
-                    decisionTree.train(*dataset)
-                    data1_models['Decision Tree'] = decisionTree
-            if model == 4:
-                print(f"{GREEN}######Training Random Forest######{RESET}")
-                if 'Random Forest' in data1_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data1_models['Random Forest'].mae_test}{RESET}")
-                else:
-                    randomForest = RandomForest_lib()
-                    randomForest.train(*dataset)
-                    data1_models['Random Forest'] = randomForest
-            if model == 5:
-                print(f"{GREEN}######Training KNN######{RESET}")
-                if 'KNN' in data1_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data1_models['KNN'].mae_test}{RESET}")
-                else:
-                    knn = KNN_lib()
-                    knn.train(*dataset)
-                    data1_models['KNN'] = knn
-            if model == 6:
-                print(f"{GREEN}######Training SVR######{RESET}")
-                if 'SVR' in data1_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data1_models['SVR'].mae_test}{RESET}")
-                else:
-                    svr = SVR_lib()
-                    svr.train(*dataset)
-                    data1_models['SVR'] = svr
-            if model == 7:
-                print(f"{GREEN}######Training Neural Network######{RESET}")
-                if 'Neural Network' in data1_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data1_models['Neural Network'].mae_test}{RESET}")
-                else:
-                    nn = N_network()
-                    nn.train(*dataset)
-                    data1_models['Neural Network'] = nn
-        if datasetint == 2:
-            if model == 0:
-                print(f"{RED}all model training is not supported yet :){RESET}")
-            if model == 1:
-                print(f"{GREEN}######Training Linear Regression from scratch######{RESET}")
-                if 'Linear Regression from scratch' in data2_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data2_models['Linear Regression from scratch'].mae_test}{RESET}")
+            else:
+                linearRegScratch = LineatRegressionScratch()
+                linearRegScratch.train(*dataset)
+                data_models[datasetint]['Linear Regression from scratch'] = linearRegScratch
 
-                else:
-                    linearRegScratch = LineatRegressionScratch()
-                    linearRegScratch.train(*dataset)
-                    data2_models['Linear Regression from scratch'] = linearRegScratch
-                    X = linearRegScratch.predict(dataset[2])
-                    print(X)
-            if model == 2:
-                print(f"{GREEN}######Training Linear Regression from library######{RESET}")
-                if 'Linear Regression from library' in data2_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data2_models['Linear Regression from library'].mae_test}{RESET}")
-                else:
-                    linearRegLib = LinearRegression_lib()
-                    linearRegLib.train(*dataset)
-                    data2_models['Linear Regression from library'] = linearRegLib
-            if model == 3:
-                print(f"{GREEN}######Training Decision Tree######{RESET}")
-                if 'Decision Tree' in data2_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data2_models['Decision Tree'].mae_test}{RESET}")
-                else:
-                    decisionTree = DecisionTree_lib()
-                    decisionTree.train(*dataset)
-                    data2_models['Decision Tree'] = decisionTree
-            if model == 4:
-                print(f"{GREEN}######Training Random Forest######{RESET}")
-                if 'Random Forest' in data2_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data2_models['Random Forest'].mae_test}{RESET}")
-                else:
-                    randomForest = RandomForest_lib()
-                    randomForest.train(*dataset)
-                    data2_models['Random Forest'] = randomForest
-            if model == 5:
-                print(f"{GREEN}######Training KNN######{RESET}")
-                if 'KNN' in data2_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data2_models['KNN'].mae_test}{RESET}")
-                else:
-                    knn = KNN_lib()
-                    knn.train(*dataset)
-                    data2_models['KNN'] = knn
-            if model == 6:
-                print(f"{GREEN}######Training SVR######{RESET}")
-                if 'SVR' in data2_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data2_models['SVR'].mae_test}{RESET}")
-                else:
-                    svr = SVR_lib()
-                    svr.train(*dataset)
-                    data2_models['SVR'] = svr
-            if model == 7:
-                print(f"{GREEN}######Training Neural Network######{RESET}")
-                if 'Neural Network' in data2_models:
-                    print(f"{RED}Model already trained{RESET}")
-                    print(f"{GREEN}Model test MAE:{RED} {data2_models['Neural Network'].mae_test}{RESET}")
-                else:
-                    nn = N_network()
-                    nn.train(*dataset)
-                    data2_models['Neural Network'] = nn
+        if model == 2:
+            print(f"{GREEN}######Training Linear Regression from library######{RESET}")
+            if 'Linear Regression from library' in data_models[datasetint]:
+                print(f"{RED}Model already trained{RESET}")
+                print(f"{GREEN}Model test MAE:{RED} {data_models[datasetint]['Linear Regression from library'].mae_test}{RESET}")
+            else:
+                linearRegLib = LinearRegression_lib()
+                linearRegLib.train(*dataset)
+                data_models[datasetint]['Linear Regression from library'] = linearRegLib
+        if model == 3:
+            print(f"{GREEN}######Training Decision Tree######{RESET}")
+            if 'Decision Tree' in data_models[datasetint]:
+                print(f"{RED}Model already trained{RESET}")
+                print(f"{GREEN}Model test MAE:{RED} {data_models[datasetint]['Decision Tree'].mae_test}{RESET}")
+            else:
+                decisionTree = DecisionTree_lib()
+                decisionTree.train(*dataset)
+                data_models[datasetint]['Decision Tree'] = decisionTree
+        if model == 4:
+            print(f"{GREEN}######Training Random Forest######{RESET}")
+            if 'Random Forest' in data_models[datasetint]:
+                print(f"{RED}Model already trained{RESET}")
+                print(f"{GREEN}Model test MAE:{RED} {data_models[datasetint]['Random Forest'].mae_test}{RESET}")
+            else:
+                randomForest = RandomForest_lib()
+                randomForest.train(*dataset)
+                data_models[datasetint]['Random Forest'] = randomForest
+        if model == 5:
+            print(f"{GREEN}######Training KNN######{RESET}")
+            if 'KNN' in data_models[datasetint]:
+                print(f"{RED}Model already trained{RESET}")
+                print(f"{GREEN}Model test MAE:{RED} {data_models[datasetint]['KNN'].mae_test}{RESET}")
+            else:
+                knn = KNN_lib()
+                knn.train(*dataset)
+                data_models[datasetint]['KNN'] = knn
+        if model == 6:
+            print(f"{GREEN}######Training SVR######{RESET}")
+            if 'SVR' in data_models[datasetint]:
+                print(f"{RED}Model already trained{RESET}")
+                print(f"{GREEN}Model test MAE:{RED} {data_models[datasetint]['SVR'].mae_test}{RESET}")
+            else:
+                svr = SVR_lib()
+                svr.train(*dataset)
+                data_models[datasetint]['SVR'] = svr
+        if model == 7:
+            print(f"{GREEN}######Training Neural Network######{RESET}")
+            if 'Neural Network' in data_models[datasetint]:
+                print(f"{RED}Model already trained{RESET}")
+                print(f"{GREEN}Model test MAE:{RED} {data_models[datasetint]['Neural Network'].mae_test}{RESET}")
+            else:
+                nn = N_network()
+                nn.train(*dataset)
+                data_models[datasetint]['Neural Network'] = nn
         pass
 
     # Read the data
@@ -254,7 +183,7 @@ if __name__ == '__main__':
                     print(f"{RED}Invalid choice{RESET}")
                     time.sleep(1.5)
                     continue
-                train_model(split1, int(model_choice), 1)
+                train_model(split1, int(model_choice), 0)
                 time.sleep(1)
 
         elif choice == '2':
@@ -278,7 +207,7 @@ if __name__ == '__main__':
                     print(f"{RED}Invalid choice{RESET}")
                     time.sleep(1.5)
                     continue
-                train_model(split2, int(model_choice), 2)
+                train_model(split2, int(model_choice), 1)
                 time.sleep(1)
             pass
         elif choice == '3':
@@ -290,6 +219,7 @@ if __name__ == '__main__':
             time.sleep(1.5)
             continue
 
-
+    print(data1_models)
+    print(data2_models)
 
 
