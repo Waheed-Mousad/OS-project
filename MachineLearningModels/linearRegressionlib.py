@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 from BatterSplit import batterSplit
 from sklearn.metrics import mean_absolute_error
 import time
-class linearRegression_lib:
+class LinearRegression_lib:
     """
     Linear regression from library model, have train and predict methods
     train method:

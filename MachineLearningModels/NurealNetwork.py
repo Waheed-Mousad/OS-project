@@ -74,6 +74,7 @@ class N_network:
         self.model = NN
         self.mae_train = mae_train
         self.mae_test = mae_test
+        return mae_train, mae_test
 
     def predict(self, X):
         y_pred = self.model.predict(X, verbose=False)

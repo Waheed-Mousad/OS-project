@@ -5,7 +5,7 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.tree import DecisionTreeRegressor
 import time
 from BatterSplit import batterSplit
-class DecisionTree:
+class DecisionTree_lib:
     """
     Decision Tree model from library, have train and predict methods
     train method:
@@ -61,6 +61,7 @@ class DecisionTree:
         self.mae_train = mae_train
         self.mae_test = mae_test
         self.target_col = y_train.columns[0]
+        return mae_train,mae_test
 
     def predict(self, X):
         y_pred = self.model.predict(X)
@@ -91,10 +92,10 @@ if __name__ == '__main__':
     ], samples=100)
     # split the data
     X_train, X_test, y_train, y_test = batterSplit(df, 'RunTime ')
-    dec_tree = DecisionTree()
+    dec_tree = DecisionTree_lib()
     dec_tree.train(X_train, y_train, X_test, y_test)
     predicted_df = dec_tree.predict(X_test)
     print(predicted_df.head())
-    print(f"Feature importance's: {dec_tree.target_col}")
+    print(f"Feature importance's: {dec_tree.feature_importances}")
     dec_tree.plot_feature_importances()
 

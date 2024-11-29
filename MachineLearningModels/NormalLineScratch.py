@@ -4,7 +4,7 @@ from BatterSplit import batterSplit
 import numpy as np
 import time
 
-class lineatRegressionScratch:
+class LineatRegressionScratch:
     """
     Linear regression from scratch model, have train and predict methods
     train method:
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     'ReqTime: ', 'ReqMemory', 'Status', 'UserID', 'RunTime '
     ], samples=100)
     X_train, X_test, y_train, y_test = batterSplit(df, 'RunTime ', 0.2)
-    model = lineatRegressionScratch()
+    model = LineatRegressionScratch()
     model.train(X_train, y_train, X_test, y_test)
     y_pred = model.predict(X_test)
     # calculate mae

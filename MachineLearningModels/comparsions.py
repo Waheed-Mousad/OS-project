@@ -1,13 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from DataPreProcess import data_preprocess, data_visualization, denormlize_data
-from sklearn.model_selection import train_test_split
-from NormalLineScratch import NormalLine
-from linearRegressionlib import NormalLine_lib
+from BatterSplit import batterSplit
+from NormalLineScratch import LineatRegressionScratch
+from linearRegressionlib import LinearRegression_lib
 from NurealNetwork import N_network
 from KNN import KNN_lib
 from SVR import SVR_lib
-from DecisionTree import DecisionTree_lib, plot_feature_importances
+from DecisionTree import DecisionTree_lib
 from RandomForest import RandomForest_lib
 
 # Dictionary to store MAE results
@@ -55,42 +55,48 @@ if __name__ == '__main__':
     'ReqTime: ', 'ReqMemory', 'Status', 'UserID', 'RunTime '
     ], samples=100)
     #data_visualization(df, "RunTime ")
-    X = df.drop('RunTime ', axis=1)
-    y = df['RunTime ']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = batterSplit(df, 'RunTime ', 0.2)
     GREEN = '\033[32m'
     RESET = '\033[0m'
 
     print(f"{GREEN}############### Normal Line from scratch ################{RESET}")
-    train_mae, test_mae =NormalLine(X_train, y_train, X_test, y_test)
+    model_linearRegressionScratch = LineatRegressionScratch()
+    train_mae, test_mae = model_linearRegressionScratch.train(X_train, y_train, X_test, y_test)
     save_mae_results("NormalLine (Scratch)", train_mae, test_mae)
 
     print(f"{GREEN}############### Normal Line from library ################{RESET}")
-    train_mae, test_mae = NormalLine_lib(X_train, y_train, X_test, y_test)
+    model_linearRegression_lib = LinearRegression_lib()
+    train_mae, test_mae = model_linearRegression_lib.train(X_train, y_train, X_test, y_test)
     save_mae_results("NormalLine (Library)", train_mae, test_mae)
 
     print(f"{GREEN}############### KNN from library ########################{RESET}")
-    train_mae, test_mae = KNN_lib(X_train, y_train, X_test, y_test)
+    model_knn_lib = KNN_lib()
+    train_mae, test_mae = model_knn_lib.train(X_train, y_train, X_test, y_test)
     save_mae_results("KNN (Library)", train_mae, test_mae)
 
     print(f"{GREEN}############### SVR from library ########################{RESET}")
-    train_mae, test_mae = SVR_lib(X_train, y_train, X_test, y_test)
+    model_svr_lib = SVR_lib()
+    train_mae, test_mae = model_svr_lib.train(X_train, y_train, X_test, y_test)
     save_mae_results("SVR (Library)", train_mae, test_mae)
 
     print(f"{GREEN}############### Decision Tree from library ##############{RESET}")
-    mae_train, mae_test, feature_importances, feature_names = DecisionTree_lib(X_train, y_train, X_test, y_test)
+    model_decisionTree_lib = DecisionTree_lib()
+    train_mae, test_mae = model_decisionTree_lib.train(X_train, y_train, X_test, y_test)
+    feature_importances, feature_names = model_decisionTree_lib.feature_importances, model_decisionTree_lib.feature_names
     save_mae_results("DecisionTree (Library)", train_mae, test_mae)
 
     print(f"{GREEN}############### Random Forest from library ##############{RESET}")
-    train_mae, test_mae = RandomForest_lib(X_train, y_train, X_test, y_test)
+    model_randomForest_lib = RandomForest_lib()
+    train_mae, test_mae = model_randomForest_lib.train(X_train, y_train, X_test, y_test)
     save_mae_results("RandomForest (Library)", train_mae, test_mae)
 
     print(f"{GREEN}############### Neural Network from library #############{RESET}")
-    train_mae, test_mae = N_network(X_train, X_test, y_train, y_test)
+    model_neuralNetwork = N_network()
+    train_mae, test_mae = model_neuralNetwork.train(X_train, y_train, X_test, y_test)
     save_mae_results("NeuralNetwork (Library)", train_mae, test_mae)
 
     # plot important features
-    plot_feature_importances(feature_importances, feature_names)
+    model_decisionTree_lib.plot_feature_importances()
     # plot number of instances and features against the target
     data_visualization(df, "RunTime ")
     # Plot MAE comparison

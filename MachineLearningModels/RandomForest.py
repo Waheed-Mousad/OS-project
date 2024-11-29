@@ -4,6 +4,8 @@ from BatterSplit import batterSplit
 from sklearn.metrics import mean_absolute_error
 from sklearn.ensemble import RandomForestRegressor
 import time
+import warnings
+warnings.filterwarnings("ignore")
 class RandomForest_lib:
     """
     Random Forest model from library, have train and predict methods
