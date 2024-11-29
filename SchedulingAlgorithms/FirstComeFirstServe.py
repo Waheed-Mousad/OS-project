@@ -5,10 +5,10 @@ from MachineLearningModels.DataPreProcess import data_preprocess, denormlize_dat
 import pandas as pd
 
 
-def FCFS(df, burst_time_col='', processID_col=''):
+def FCFS(df, burst_time_col=''):
     """
     First Come First Serve Algorithm
-    input: dataframe, burst_time_col, processID_col
+    input: dataframe, burst_time_col,
     output: same data frame with new columns: waiting_time, turn_around_time as well as average waiting time and average turn around time
     """
     #assuming the data arrived at time 0
@@ -37,10 +37,11 @@ if __name__ == '__main__':
     df1 = denormlize_data(df1, mapping1, no_norm_col=['JobID'])
     df2 = denormlize_data(df2, mapping2, no_norm_col=['JobID'])
     print(df2)
-    df2, avg_waiting_time, avg_turn_around_time = FCFS(df2, 'RunTime ', 'JobID')
+    df2, avg_waiting_time, avg_turn_around_time = FCFS(df2, 'RunTime ')
     print(df2)
     print(f"Average Waiting Time: {avg_waiting_time}")
     print(f"Average Turn Around Time: {avg_turn_around_time}")
+
 
 
 
