@@ -28,12 +28,6 @@ def FCFS(df, burst_time_col='', processID_col=''):
     avg_turn_around_time = df['turn_around_time'].mean()
     return df, avg_waiting_time, avg_turn_around_time
 
-
-
-
-
-
-
 if __name__ == '__main__':
     file_path = os.path.join(os.path.dirname(__file__), '..', 'MachineLearningModels', 'processes_datasets.csv')
     df1 = pd.read_csv(file_path)
