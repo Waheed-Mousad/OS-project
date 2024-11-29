@@ -1,9 +1,14 @@
 import pandas as pd
 
 # Function to preprocess the data by mapping catagorical columns and normalizing numeric columns
-def data_preprocess(df, target_col=[], samples=0):
+def data_preprocess(df, target_col=[], samples=0, no_norm_col=[]):
     if len(target_col) != 0:
         df = df[target_col]
+    # seperate the column that should not be normalized
+    if len(no_norm_col) != 0:
+        for col in no_norm_col:
+            temp_df = df[col]
+            df = df.drop(col, axis=1)
     # Identify numeric columns
     numeric_cols = df.select_dtypes(include=['number']).columns
     # Remove rows where any numeric column contains 0 or negative values
@@ -23,6 +28,10 @@ def data_preprocess(df, target_col=[], samples=0):
         numeric_mapping[col] = (min_val, max_val)
     # Save the mapping
     mapping = {'catagorical': catagorical_mapping, 'numeric': numeric_mapping}
+    # Add the columns that should not be normalized at the beggining of original dataframe
+    if len(no_norm_col) != 0:
+        for col in no_norm_col:
+            df.insert(0, col, temp_df)
     # Sample the data
     if samples != 0:
         df = df.sample(n=samples, random_state=42)
@@ -46,7 +55,12 @@ def data_visualization(df, target_col=""):
 
 
 # a function that denomrlized the data using the mapping
-def denormlize_data(df, mapping):
+def denormlize_data(df, mapping, no_norm_col=[]):
+    # ignore the columns that did not get normalized
+    if len(no_norm_col) != 0:
+        for col in no_norm_col:
+            temp_df = df[col]
+            df = df.drop(col, axis=1)
     # Denormalize numeric columns
     for col in mapping['numeric']:
         df[col] = df[col] * (mapping['numeric'][col][1] - mapping['numeric'][col][0]) + mapping['numeric'][col][0]
@@ -55,6 +69,10 @@ def denormlize_data(df, mapping):
         # Reverse the mapping, turn into integer before mapping
         df[col] = df[col].apply(lambda x: int(x))
         df[col] = df[col].apply(lambda x: mapping['catagorical'][col][x])
+    # add the columns that did not get normalized
+    if len(no_norm_col) != 0:
+        for col in no_norm_col:
+            df.insert(0, col, temp_df)
     return df
 
 
