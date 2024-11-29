@@ -32,6 +32,7 @@ if __name__ == '__main__':
     data_models = [data1_models, data2_models]
     predictions_data1 = {}
     predictions_data2 = {}
+    predictions = [predictions_data1, predictions_data2]
     GREEN = "\033[32m"  # Green color
     RESET = "\033[0m"  # Reset to default color
     RED = "\033[31m"  # Red color
@@ -66,6 +67,7 @@ if __name__ == '__main__':
                 linearRegScratch = LineatRegressionScratch()
                 linearRegScratch.train(*dataset)
                 data_models[datasetint]['Linear Regression from scratch'] = linearRegScratch
+                predictions[datasetint]['Linear Regression from scratch'] = linearRegScratch.predict(dataset[2])
 
         if model == 2:
             print(f"{GREEN}######Training Linear Regression from library######{RESET}")
@@ -76,6 +78,8 @@ if __name__ == '__main__':
                 linearRegLib = LinearRegression_lib()
                 linearRegLib.train(*dataset)
                 data_models[datasetint]['Linear Regression from library'] = linearRegLib
+                predictions[datasetint]['Linear Regression from library'] = linearRegLib.predict(dataset[2])
+
         if model == 3:
             print(f"{GREEN}######Training Decision Tree######{RESET}")
             if 'Decision Tree' in data_models[datasetint]:
@@ -85,6 +89,7 @@ if __name__ == '__main__':
                 decisionTree = DecisionTree_lib()
                 decisionTree.train(*dataset)
                 data_models[datasetint]['Decision Tree'] = decisionTree
+                predictions[datasetint]['Decision Tree'] = decisionTree.predict(dataset[2])
         if model == 4:
             print(f"{GREEN}######Training Random Forest######{RESET}")
             if 'Random Forest' in data_models[datasetint]:
@@ -94,6 +99,7 @@ if __name__ == '__main__':
                 randomForest = RandomForest_lib()
                 randomForest.train(*dataset)
                 data_models[datasetint]['Random Forest'] = randomForest
+                predictions[datasetint]['Random Forest'] = randomForest.predict(dataset[2])
         if model == 5:
             print(f"{GREEN}######Training KNN######{RESET}")
             if 'KNN' in data_models[datasetint]:
@@ -103,6 +109,7 @@ if __name__ == '__main__':
                 knn = KNN_lib()
                 knn.train(*dataset)
                 data_models[datasetint]['KNN'] = knn
+                predictions[datasetint]['KNN'] = knn.predict(dataset[2])
         if model == 6:
             print(f"{GREEN}######Training SVR######{RESET}")
             if 'SVR' in data_models[datasetint]:
@@ -112,6 +119,7 @@ if __name__ == '__main__':
                 svr = SVR_lib()
                 svr.train(*dataset)
                 data_models[datasetint]['SVR'] = svr
+                predictions[datasetint]['SVR'] = svr.predict(dataset[2])
         if model == 7:
             print(f"{GREEN}######Training Neural Network######{RESET}")
             if 'Neural Network' in data_models[datasetint]:
@@ -121,6 +129,7 @@ if __name__ == '__main__':
                 nn = N_network()
                 nn.train(*dataset)
                 data_models[datasetint]['Neural Network'] = nn
+                predictions[datasetint]['Neural Network'] = nn.predict(dataset[2])
         pass
 
     # Read the data
@@ -163,8 +172,6 @@ if __name__ == '__main__':
 
         if choice == '1':
             print(f"{GREEN}######Working on Dataset 1######{RESET}")
-            # TODO ask the user which model to train on or all after that wait for the user confirmation to run the scheduling algorithm on predicted results
-
             while True:
                 print(f"{CYAN}Which model would you like to train?{RESET}")
                 print(models_print)
@@ -185,10 +192,10 @@ if __name__ == '__main__':
                     continue
                 train_model(split1, int(model_choice), 0)
                 time.sleep(1)
+                # TODO tell the user what model has been trained and ask which one he wish to schedule
 
         elif choice == '2':
             print(f"{GREEN}######Working on Dataset 2######{RESET}")
-            # TODO ask the user which model to train on or all after that wait for the user confirmation to run the scheduling algorithm on predicted results
             while True:
                 print(f"{CYAN}Which model would you like to train?{RESET}")
                 print(models_print)
@@ -209,6 +216,7 @@ if __name__ == '__main__':
                     continue
                 train_model(split2, int(model_choice), 1)
                 time.sleep(1)
+                # TODO tell the user what model has been trained and ask which one he wish to schedule
             pass
         elif choice == '3':
             print(f"{RED}Exiting...{RESET}")
