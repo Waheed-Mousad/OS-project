@@ -1,10 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from DataPreProcess import data_preprocess, data_visualization, denormlize_data
+from MachineLearningModels.DataPreProcess import data_preprocess
+from MachineLearningModels.BatterSplit import batterSplit
 from sklearn.metrics import mean_absolute_error
 from sklearn.tree import DecisionTreeRegressor
 import time
-from BatterSplit import batterSplit
 class DecisionTree_lib:
     """
     Decision Tree model from library, have train and predict methods

@@ -1,6 +1,6 @@
 import pandas as pd
-from DataPreProcess import data_preprocess, data_visualization, denormlize_data
-from BatterSplit import batterSplit
+from MachineLearningModels.DataPreProcess import data_preprocess
+from MachineLearningModels.BatterSplit import batterSplit
 from sklearn.svm import SVR
 from sklearn.metrics import mean_absolute_error
 import time

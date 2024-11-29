@@ -1,7 +1,7 @@
 import pandas as pd
-from DataPreProcess import data_preprocess, data_visualization, denormlize_data
+from MachineLearningModels.DataPreProcess import data_preprocess
+from MachineLearningModels.BatterSplit import batterSplit
 from sklearn.linear_model import LinearRegression
-from BatterSplit import batterSplit
 from sklearn.metrics import mean_absolute_error
 import time
 class LinearRegression_lib:
