@@ -21,5 +21,5 @@ if exist requirements.txt (
     echo requirements.txt not found. Skipping package installation.
 )
 
-echo Environment setup complete!
+echo Environment setup complete! please start the script by running start.bat
 pause
