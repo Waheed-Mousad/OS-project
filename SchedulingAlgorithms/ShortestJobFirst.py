@@ -14,20 +14,20 @@ def SJF(df, burst_time_col=''):
     # sort the data frame based on burst time
     df = df.sort_values(by=burst_time_col)
     #assuming the data arrived at time 0
-    df['waiting_time'] = 0
-    df['turn_around_time'] = 0
+    df['SJF waiting_time'] = 0
+    df['SJF turn_around_time'] = 0
     # calculate waiting time and turn around time for each process
     for idx in df.index:
         if idx == df.index[0]:
-            df.loc[idx, 'waiting_time'] = 0  # First process has no waiting time
+            df.loc[idx, 'SJF waiting_time'] = 0  # First process has no waiting time
         else:
             prev_idx = df.index[df.index.get_loc(idx) - 1]  # Get the previous index
-            df.loc[idx, 'waiting_time'] = df.loc[prev_idx, burst_time_col] + df.loc[prev_idx, 'waiting_time']
+            df.loc[idx, 'SJF waiting_time'] = df.loc[prev_idx, burst_time_col] + df.loc[prev_idx, 'SJF waiting_time']
 
-        df.loc[idx, 'turn_around_time'] = df.loc[idx, burst_time_col] + df.loc[idx, 'waiting_time']
+        df.loc[idx, 'SJF turn_around_time'] = df.loc[idx, burst_time_col] + df.loc[idx, 'SJF waiting_time']
     # calculate the average waiting time and average turn around time
-    avg_waiting_time = df['waiting_time'].mean()
-    avg_turn_around_time = df['turn_around_time'].mean()
+    avg_waiting_time = df['SJF waiting_time'].mean()
+    avg_turn_around_time = df['SJF turn_around_time'].mean()
     return df, avg_waiting_time, avg_turn_around_time
 
 

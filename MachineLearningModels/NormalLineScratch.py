@@ -50,7 +50,9 @@ class LineatRegressionScratch:
             self.feature_mapping[temp_names[i]] = b[i]
         # calculate MAE for training data and testing data
         y_train_pred = np.dot(X_train, b)
+        start = time.time()
         y_test_pred = np.dot(X_test, b)
+        end = time.time()
         mae_train = np.mean(np.abs(y_train - y_train_pred))
         mae_test = np.mean(np.abs(y_test - y_test_pred))
         YELLOW = "\033[33m"  # Yellow color
@@ -60,6 +62,7 @@ class LineatRegressionScratch:
             f"{YELLOW}(Linear regression using normal line from scratch){RESET} {RED}MAE{RESET} for training data: {RED}{mae_train}{RESET}")
         print(
             f"{YELLOW}(Linear regression using normal line from scratch){RESET} {RED}MAE{RESET} for testing data: {RED}{mae_test}{RESET}")
+        print(f"{YELLOW}Time taken to predict the testing data:{RESET} {RED}{end - start} seconds{RESET}")
         self.weights = b
         self.mae_train = mae_train
         self.mae_test = mae_test

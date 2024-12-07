@@ -49,7 +49,9 @@ class KNN_lib:
         self.feature_names = X_train
         return mae_train,mae_test
 
-    def predict(self, X):
+    def predict(self, x):
+        # copy the dataframe to not effect the original dataframe
+        X = x.copy()
         y_pred = self.model.predict(X)
         X[self.target_col] = y_pred
         return X

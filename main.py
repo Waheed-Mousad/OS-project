@@ -24,6 +24,7 @@ from MachineLearningModels.BatterSplit import batterSplit
 import pandas as pd
 from SchedulingAlgorithms.FirstComeFirstServe import FCFS
 from SchedulingAlgorithms.ShortestJobFirst import SJF
+from PlottingMethods.SchedulingPlotting import plot_turn_around_vs_waiting_time
 import time
 
 if __name__ == '__main__':
@@ -55,8 +56,16 @@ if __name__ == '__main__':
         0 for all models
         :return:
         """
+
         if model == 0:
-            print(f"{RED}all model training is not supported yet :){RESET}")
+            print(f"{RED}Training all models will take time please wait...{RESET}")
+            train_model(dataset, 1, datasetint)
+            train_model(dataset, 2, datasetint)
+            train_model(dataset, 3, datasetint)
+            train_model(dataset, 4, datasetint)
+            train_model(dataset, 5, datasetint)
+            train_model(dataset, 6, datasetint)
+            train_model(dataset, 7, datasetint)
         if model == 1:
             print(f"{GREEN}######Training Linear Regression from scratch######{RESET}")
             if 'Linear Regression from scratch' in data_models[datasetint]:
@@ -192,7 +201,56 @@ if __name__ == '__main__':
                     continue
                 train_model(split1, int(model_choice), 0)
                 time.sleep(1)
-                # TODO tell the user what model has been trained and ask which one he wish to schedule
+            # TODO tell the user what model has been trained and ask which one he wish to schedule show schedule for
+            print(f"{RED}scheduling...{RESET}")
+
+            for key, value in predictions_data1.items():
+                try:
+                    value = denormlize_data(value, mapping1)
+                    temp = [[],[]]
+                    df, avg_waiting_time, avg_turn_around_time = SJF(value, value.columns[-1])
+                    temp[0] = [df, avg_waiting_time, avg_turn_around_time]
+                    df, avg_waiting_time, avg_turn_around_time = FCFS(value, value.columns[-1])
+                    temp[1] = [df, avg_waiting_time, avg_turn_around_time]
+                    predictions_data1[key] = temp
+                except:
+                    print(f"{RED}{key} already scheduled skipping to next...{RESET}")
+                    continue
+            #loop thro the dictionary predictions_data1 and
+            time.sleep(1)
+            while True:
+                print(f"{CYAN}Which model would you like to plot the schedule for?{RESET}")
+                print(f"{YELLOW}0{RESET}. {MAGENTA}All available models{RESET}")
+                value = list(predictions_data1.values())
+                keys = list(predictions_data1.keys())
+                for index, key in enumerate(keys, start=1):
+                    print(f"{YELLOW}{index}{RESET}. {MAGENTA}{key}{RESET}")
+                print(f"{YELLOW}{(len(value)+1)}{RESET}. {RED}Exit{RESET}")
+
+                choice = input()
+                # make sure the user input is valid and in legal range
+                try:
+                    int(choice)
+                except ValueError:
+                    print(f"{RED}Invalid choice{RESET}")
+                    time.sleep(1.5)
+                    continue
+                if int(choice) not in range(0,len(value)+2):
+                    print(f"{RED}Invalid choice{RESET}")
+                    time.sleep(1.5)
+                    continue
+                if int(choice) == index + 1:
+                    print(f"{RED}Exiting...{RESET}")
+                    time.sleep(1.5)
+                    break
+                if int(choice) == 0:
+                    print(f"{GREEN}Plotting all models not implemented yet :){RESET}")
+                    continue
+                print(f"{GREEN}Plotting {keys[int(choice)-1]}...{RESET}")
+                plot_turn_around_vs_waiting_time(value[int(choice)-1], keys[int(choice)-1])
+                time.sleep(0.5)
+
+
 
         elif choice == '2':
             print(f"{GREEN}######Working on Dataset 2######{RESET}")
@@ -216,8 +274,53 @@ if __name__ == '__main__':
                     continue
                 train_model(split2, int(model_choice), 1)
                 time.sleep(1)
-                # TODO tell the user what model has been trained and ask which one he wish to schedule
-            pass
+            # TODO tell the user what model has been trained and ask which one he wish to schedule
+            print(f"{RED}scheduling...{RESET}")
+            for key, value in predictions_data2.items():
+                try:
+                    value = denormlize_data(value, mapping2)
+                    temp = [[],[]]
+                    df, avg_waiting_time, avg_turn_around_time = SJF(value, value.columns[-1])
+                    temp[0] = [df, avg_waiting_time, avg_turn_around_time]
+                    df, avg_waiting_time, avg_turn_around_time = FCFS(value, value.columns[-1])
+                    temp[1] = [df, avg_waiting_time, avg_turn_around_time]
+                    predictions_data2[key] = temp
+                except:
+                    print(f"{RED}{key} already scheduled skipping to next...{RESET}")
+                    continue
+            # loop thro the dictionary predictions_data1 and plot the schedule
+            time.sleep(1)
+            while True:
+                print(f"{CYAN}Which model would you like to plot the schedule for?{RESET}")
+                print(f"{YELLOW}0{RESET}. {MAGENTA}All available models{RESET}")
+                value = list(predictions_data2.values())
+                keys = list(predictions_data2.keys())
+                for index, key in enumerate(keys, start=1):
+                    print(f"{YELLOW}{index}{RESET}. {MAGENTA}{key}{RESET}")
+                print(f"{YELLOW}{(len(value)+1)}{RESET}. {RED}Exit{RESET}")
+
+                choice = input()
+                # make sure the user input is valid and in legal range
+                try:
+                    int(choice)
+                except ValueError:
+                    print(f"{RED}Invalid choice{RESET}")
+                    time.sleep(1.5)
+                    continue
+                if int(choice) not in range(0,len(value)+2):
+                    print(f"{RED}Invalid choice{RESET}")
+                    time.sleep(1.5)
+                    continue
+                if int(choice) == index + 1:
+                    print(f"{RED}Exiting...{RESET}")
+                    time.sleep(1.5)
+                    break
+                if int(choice) == 0:
+                    print(f"{GREEN}Plotting all models not implemented yet :){RESET}")
+                    continue
+                print(f"{GREEN}Plotting {keys[int(choice)-1]}...{RESET}")
+                plot_turn_around_vs_waiting_time(value[int(choice)-1], keys[int(choice)-1])
+                time.sleep(0.5)
         elif choice == '3':
             print(f"{RED}Exiting...{RESET}")
             time.sleep(1.5)
@@ -227,7 +330,5 @@ if __name__ == '__main__':
             time.sleep(1.5)
             continue
 
-    print(data1_models)
-    print(data2_models)
 
 

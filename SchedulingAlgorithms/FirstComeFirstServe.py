@@ -12,20 +12,20 @@ def FCFS(df, burst_time_col=''):
     output: same data frame with new columns: waiting_time, turn_around_time as well as average waiting time and average turn around time
     """
     #assuming the data arrived at time 0
-    df['waiting_time'] = 0
-    df['turn_around_time'] = 0
+    df['FCFS waiting_time'] = 0
+    df['FCFS turn_around_time'] = 0
     # calculate waiting time and turn around time for each process
     for idx in df.index:
         if idx == df.index[0]:
-            df.loc[idx, 'waiting_time'] = 0  # First process has no waiting time
+            df.loc[idx, 'FCFS waiting_time'] = 0  # First process has no waiting time
         else:
             prev_idx = df.index[df.index.get_loc(idx) - 1]  # Get the previous index
-            df.loc[idx, 'waiting_time'] = df.loc[prev_idx, burst_time_col] + df.loc[prev_idx, 'waiting_time']
+            df.loc[idx, 'FCFS waiting_time'] = df.loc[prev_idx, burst_time_col] + df.loc[prev_idx, 'FCFS waiting_time']
 
-        df.loc[idx, 'turn_around_time'] = df.loc[idx, burst_time_col] + df.loc[idx, 'waiting_time']
+        df.loc[idx, 'FCFS turn_around_time'] = df.loc[idx, burst_time_col] + df.loc[idx, 'FCFS waiting_time']
     # calculate the average waiting time and average turn around time
-    avg_waiting_time = df['waiting_time'].mean()
-    avg_turn_around_time = df['turn_around_time'].mean()
+    avg_waiting_time = df['FCFS waiting_time'].mean()
+    avg_turn_around_time = df['FCFS turn_around_time'].mean()
     return df, avg_waiting_time, avg_turn_around_time
 
 if __name__ == '__main__':
