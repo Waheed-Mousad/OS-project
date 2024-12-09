@@ -63,6 +63,6 @@ if __name__ == '__main__':
     'ReqTime: ', 'ReqMemory', 'Status', 'UserID', 'RunTime '
     ], samples=100)
     X_train, X_test, y_train, y_test = batterSplit(df, 'RunTime ', 0.2)
-    model = linearRegression_lib()
+    model = LinearRegression_lib()
     model.train(X_train, y_train, X_test, y_test)
     print(model.predict(X_test))
